@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assistant séquentiel - Évaluation CEGCh</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1 class="titre-principal">Rétroaction étudiante en génie chimique (RÉGCh)</h1>
+    </header>
+
+    <div id="phase-evaluation">
+        
+        <div class="bandeau-progression">
+            <div class="entete-progression">
+                <span id="compteur-cours" class="compteur-cours">Cours 1 sur 1</span>
+                <a href="index.html" class="btn-lien">Modifier ma sélection de cours</a>
+            </div>
+            <div class="piste-jetons" id="piste-jetons"></div>
+            <div class="barre-fond">
+                <div class="barre-remplissage" id="barre-remplissage"></div>
+            </div>
+        </div>
+
+        <h2 id="titre-cours-actif">Évaluation : Sigle</h2>
+        
+        <form id="formulaire-cours" novalidate>
+            
+            <!-- QUESTION 1 -->
+            <div class="question-bloc" id="bloc-q1">
+                <div class="question-titre">1. Comment votre niveau de motivation a-t-il varié au fil de la session ?</div>
+                <div class="likert-grille">
+                    <label class="likert-choix"><input type="radio" name="motivation" value="1"> <span>Il a fortement diminué</span></label>
+                    <label class="likert-choix"><input type="radio" name="motivation" value="2"> <span>Il a diminué</span></label>
+                    <label class="likert-choix"><input type="radio" name="motivation" value="3"> <span>Il est resté constant</span></label>
+                    <label class="likert-choix"><input type="radio" name="motivation" value="4"> <span>Il a augmenté</span></label>
+                    <label class="likert-choix"><input type="radio" name="motivation" value="5"> <span>Il a fortement augmenté</span></label>
+                </div>
+                <div class="likert-isolation">
+                    <label class="likert-choix choix-na"><input type="radio" name="motivation" value="NA"> <span>Ne s'applique pas (S. O.) ou je ne souhaite pas répondre</span></label>
+                </div>
+                <div class="erreur-question masque">Veuillez sélectionner une option (ou « Ne s'applique pas »).</div>
+            </div>
+
+            <!-- QUESTION 2 -->
+            <div class="question-bloc" id="bloc-q2">
+                <div class="question-titre">2. En excluant les séances de cours et de laboratoires à l'horaire, combien d'heures par semaine, en moyenne, avez-vous consacrées à l'étude et aux travaux de ce cours ?</div>
+                <div class="likert-grille">
+                    <label class="likert-choix"><input type="radio" name="charge" value="1"> <span>Moins de 2 h</span></label>
+                    <label class="likert-choix"><input type="radio" name="charge" value="2"> <span>3 ou 4 h</span></label>
+                    <label class="likert-choix"><input type="radio" name="charge" value="3"> <span>5 ou 6 h</span></label>
+                    <label class="likert-choix"><input type="radio" name="charge" value="4"> <span>7 ou 8 h</span></label>
+                    <label class="likert-choix"><input type="radio" name="charge" value="5"> <span>Plus de 8 h</span></label>
+                </div>
+                <div class="likert-isolation">
+                    <label class="likert-choix choix-na"><input type="radio" name="charge" value="NA"> <span>Ne s'applique pas (S. O.) ou je ne souhaite pas répondre</span></label>
+                </div>
+                <div class="erreur-question masque">Veuillez sélectionner une option (ou « Ne s'applique pas »).</div>
+            </div>
+
+            <!-- QUESTION 3 -->
+            <div class="question-bloc" id="bloc-q3">
+                <div class="question-titre">3. Les séances de travaux dirigés et les laboratoires permettent de consolider efficacement les concepts théoriques vus en classe.</div>
+                <div class="likert-grille">
+                    <label class="likert-choix"><input type="radio" name="consolidation" value="1"> <span>Très en désaccord</span></label>
+                    <label class="likert-choix"><input type="radio" name="consolidation" value="2"> <span>En désaccord</span></label>
+                    <label class="likert-choix"><input type="radio" name="consolidation" value="3"> <span>Neutre</span></label>
+                    <label class="likert-choix"><input type="radio" name="consolidation" value="4"> <span>En accord</span></label>
+                    <label class="likert-choix"><input type="radio" name="consolidation" value="5"> <span>Très en accord</span></label>
+                </div>
+                <div class="likert-isolation">
+                    <label class="likert-choix choix-na"><input type="radio" name="consolidation" value="NA"> <span>Ne s'applique pas (S. O.) ou je ne souhaite pas répondre</span></label>
+                </div>
+                <div class="erreur-question masque">Veuillez sélectionner une option (ou « Ne s'applique pas »).</div>
+            </div>
+
+            <!-- QUESTION 4 -->
+            <div class="question-bloc" id="bloc-q4">
+                <div class="question-titre">4. Pour les travaux et laboratoires, les attentes ainsi que les critères de correction sont définis sans ambiguïté.</div>
+                <div class="likert-grille">
+                    <label class="likert-choix"><input type="radio" name="clarte_livrables" value="1"> <span>Très en désaccord</span></label>
+                    <label class="likert-choix"><input type="radio" name="clarte_livrables" value="2"> <span>En désaccord</span></label>
+                    <label class="likert-choix"><input type="radio" name="clarte_livrables" value="3"> <span>Neutre</span></label>
+                    <label class="likert-choix"><input type="radio" name="clarte_livrables" value="4"> <span>En accord</span></label>
+                    <label class="likert-choix"><input type="radio" name="clarte_livrables" value="5"> <span>Très en accord</span></label>
+                </div>
+                <div class="likert-isolation">
+                    <label class="likert-choix choix-na"><input type="radio" name="clarte_livrables" value="NA"> <span>Ne s'applique pas (S. O.) ou je ne souhaite pas répondre</span></label>
+                </div>
+                <div class="erreur-question masque">Veuillez sélectionner une option (ou « Ne s'applique pas »).</div>
+            </div>
+
+            <!-- QUESTION 5 -->
+            <div class="question-bloc" id="bloc-q5">
+                <div class="question-titre">5. Les évaluations portaient sur les éléments importants de la matière.</div>
+                <div class="likert-grille">
+                    <label class="likert-choix"><input type="radio" name="clarte_examens" value="1"> <span>Très en désaccord</span></label>
+                    <label class="likert-choix"><input type="radio" name="clarte_examens" value="2"> <span>En désaccord</span></label>
+                    <label class="likert-choix"><input type="radio" name="clarte_examens" value="3"> <span>Neutre</span></label>
+                    <label class="likert-choix"><input type="radio" name="clarte_examens" value="4"> <span>En accord</span></label>
+                    <label class="likert-choix"><input type="radio" name="clarte_examens" value="5"> <span>Très en accord</span></label>
+                </div>
+                <div class="likert-isolation">
+                    <label class="likert-choix choix-na"><input type="radio" name="clarte_examens" value="NA"> <span>Ne s'applique pas (S. O.) ou je ne souhaite pas répondre</span></label>
+                </div>
+                <div class="erreur-question masque">Veuillez sélectionner une option (ou « Ne s'applique pas »).</div>
+            </div>
+
+            <!-- QUESTION 6 -->
+            <div class="question-bloc" id="bloc-q6">
+                <div class="question-titre">6. Les corrections sont reçues dans un délai permettant de s'améliorer avant l'évaluation suivante.</div>
+                <div class="likert-grille">
+                    <label class="likert-choix"><input type="radio" name="delai_correction" value="1"> <span>Très en désaccord</span></label>
+                    <label class="likert-choix"><input type="radio" name="delai_correction" value="2"> <span>En désaccord</span></label>
+                    <label class="likert-choix"><input type="radio" name="delai_correction" value="3"> <span>Neutre</span></label>
+                    <label class="likert-choix"><input type="radio" name="delai_correction" value="4"> <span>En accord</span></label>
+                    <label class="likert-choix"><input type="radio" name="delai_correction" value="5"> <span>Très en accord</span></label>
+                </div>
+                <div class="likert-isolation">
+                    <label class="likert-choix choix-na"><input type="radio" name="delai_correction" value="NA"> <span>Ne s'applique pas (S. O.) ou je ne souhaite pas répondre</span></label>
+                </div>
+                <div class="erreur-question masque">Veuillez sélectionner une option (ou « Ne s'applique pas »).</div>
+            </div>
+
+            <!-- QUESTION 7 -->
+            <div class="question-bloc" id="bloc-q7">
+                <div class="question-titre">7. La gestion de la plateforme informatique du cours (ex. : Moodle) est ordonnée et facilite la recherche d'information.</div>
+                <div class="likert-grille">
+                    <label class="likert-choix"><input type="radio" name="plateforme_moodle" value="1"> <span>Très en désaccord</span></label>
+                    <label class="likert-choix"><input type="radio" name="plateforme_moodle" value="2"> <span>En désaccord</span></label>
+                    <label class="likert-choix"><input type="radio" name="plateforme_moodle" value="3"> <span>Neutre</span></label>
+                    <label class="likert-choix"><input type="radio" name="plateforme_moodle" value="4"> <span>En accord</span></label>
+                    <label class="likert-choix"><input type="radio" name="plateforme_moodle" value="5"> <span>Très en accord</span></label>
+                </div>
+                <div class="likert-isolation">
+                    <label class="likert-choix choix-na"><input type="radio" name="plateforme_moodle" value="NA"> <span>Ne s'applique pas (S. O.) ou je ne souhaite pas répondre</span></label>
+                </div>
+                <div class="erreur-question masque">Veuillez sélectionner une option (ou « Ne s'applique pas »).</div>
+            </div>
+
+            <!-- QUESTION 8 -->
+            <div class="question-bloc" id="bloc-q8">
+                <div class="question-titre">8. Une quantité suffisante d'exercices est disponible pour pratiquer.</div>
+                <div class="likert-grille">
+                    <label class="likert-choix"><input type="radio" name="quantite_exercices" value="1"> <span>Très en désaccord</span></label>
+                    <label class="likert-choix"><input type="radio" name="quantite_exercices" value="2"> <span>En désaccord</span></label>
+                    <label class="likert-choix"><input type="radio" name="quantite_exercices" value="3"> <span>Neutre</span></label>
+                    <label class="likert-choix"><input type="radio" name="quantite_exercices" value="4"> <span>En accord</span></label>
+                    <label class="likert-choix"><input type="radio" name="quantite_exercices" value="5"> <span>Très en accord</span></label>
+                </div>
+                <div class="likert-isolation">
+                    <label class="likert-choix choix-na"><input type="radio" name="quantite_exercices" value="NA"> <span>Ne s'applique pas (S. O.) ou je ne souhaite pas répondre</span></label>
+                </div>
+                <div class="erreur-question masque">Veuillez sélectionner une option (ou « Ne s'applique pas »).</div>
+            </div>
+
+            <!-- QUESTION 9 -->
+            <div class="question-bloc" id="bloc-q9">
+                <div class="question-titre">9. À quelle fréquence avez-vous eu recours à des outils d'intelligence artificielle pour réaliser les activités d'apprentissage ou les travaux de ce cours ?</div>
+                <div class="likert-grille">
+                    <label class="likert-choix"><input type="radio" name="frequence_ia" value="1"> <span>Jamais</span></label>
+                    <label class="likert-choix"><input type="radio" name="frequence_ia" value="2"> <span>Rarement</span></label>
+                    <label class="likert-choix"><input type="radio" name="frequence_ia" value="3"> <span>Parfois</span></label>
+                    <label class="likert-choix"><input type="radio" name="frequence_ia" value="4"> <span>Souvent</span></label>
+                    <label class="likert-choix"><input type="radio" name="frequence_ia" value="5"> <span>Systématiquement</span></label>
+                </div>
+                <div class="likert-isolation">
+                    <label class="likert-choix choix-na"><input type="radio" name="frequence_ia" value="NA"> <span>Ne s'applique pas (S. O.) ou je ne souhaite pas répondre</span></label>
+                </div>
+                <div class="erreur-question masque">Veuillez sélectionner une option (ou « Ne s'applique pas »).</div>
+            </div>
+
+            <!-- QUESTION 10 (Options à choix multiples codées en colonnes binaires 1/0) -->
+            <div class="question-bloc" id="bloc-q10">
+                <div class="question-titre">10. Pour quelles raisons principales avez-vous utilisé l'IA dans ce cours ? <span class="sous-titre-question">(Cochez tout ce qui s'applique)</span></div>
+                <div class="grille-options-decouvertes">
+                    <label class="option-decouverte">
+                        <input type="checkbox" name="raisons_ia" value="notes">
+                        <span>Résumer ou expliquer des notes de cours complexes</span>
+                    </label>
+                    <label class="option-decouverte">
+                        <input type="checkbox" name="raisons_ia" value="tutorat">
+                        <span>Obtenir de la rétroaction (style tutorat)</span>
+                    </label>
+                    <label class="option-decouverte">
+                        <input type="checkbox" name="raisons_ia" value="idees">
+                        <span>Générer des idées</span>
+                    </label>
+                    <label class="option-decouverte">
+                        <input type="checkbox" name="raisons_ia" value="demarche">
+                        <span>Obtenir la démarche détaillée d'exercices dont seule la réponse finale est fournie</span>
+                    </label>
+                    <label class="option-decouverte">
+                        <input type="checkbox" name="raisons_ia" value="exercices">
+                        <span>Générer des exercices supplémentaires</span>
+                    </label>
+                    <label class="option-decouverte">
+                        <input type="checkbox" name="raisons_ia" value="travaux">
+                        <span>Rédiger, coder ou résoudre directement une partie des travaux évalués</span>
+                    </label>
+                    <label class="option-decouverte">
+                        <input type="checkbox" name="raisons_ia" value="langue">
+                        <span>Réviser la qualité de la langue</span>
+                    </label>
+                    <label class="option-decouverte">
+                        <input type="checkbox" name="raisons_ia" value="autre" id="checkbox-ia-autre">
+                        <span>Autre (préciser)</span>
+                    </label>
+                </div>
+                <textarea name="raisons_ia_autre" id="champ-ia-autre" class="champ-large masque" rows="2" placeholder="Veuillez préciser la raison d'utilisation de l'IA..."></textarea>
+                
+                <div class="likert-isolation">
+                    <label class="option-decouverte choix-na">
+                        <input type="checkbox" name="raisons_ia" value="aucune" data-exclusif="true">
+                        <span>Je n'ai pas utilisé l'IA dans ce cours</span>
+                    </label>
+                </div>
+                <div class="erreur-question masque">Veuillez cocher au moins une option (et préciser votre pensée si « Autre » est coché).</div>
+            </div>
+
+            <!-- QUESTION 11 (Force principale du cours + échappatoire) -->
+            <div class="question-bloc" id="bloc-q11">
+                <div class="question-titre">11. Quelle est la principale force de ce cours ?</div>
+                <textarea name="force" id="champ-force" class="champ-large" rows="4" placeholder="Vos commentaires sur les points forts du cours..."></textarea>
+                
+                <div class="likert-isolation">
+                    <label class="option-decouverte choix-na">
+                        <input type="checkbox" name="force_na" id="checkbox-force-na" value="Aucun commentaire">
+                        <span>Aucun commentaire / Rien à signaler</span>
+                    </label>
+                </div>
+                <div class="erreur-question masque">Veuillez formuler un commentaire ou cocher « Aucun commentaire ».</div>
+            </div>
+
+            <!-- QUESTION 12 (Pistes d'amélioration + échappatoire) -->
+            <div class="question-bloc" id="bloc-q12">
+                <div class="question-titre">12. Si vous aviez à donner ce cours, que feriez-vous différemment ?</div>
+                <textarea name="ameliorations" id="champ-ameliorations" class="champ-large" rows="4" placeholder="Vos suggestions constructives..."></textarea>
+                
+                <div class="likert-isolation">
+                    <label class="option-decouverte choix-na">
+                        <input type="checkbox" name="ameliorations_na" id="checkbox-ameliorations-na" value="Aucun commentaire">
+                        <span>Aucun commentaire / Rien à signaler</span>
+                    </label>
+                </div>
+                <div class="erreur-question masque">Veuillez formuler un commentaire ou cocher « Aucun commentaire ».</div>
+            </div>
+
+        </form>
+
+        <div id="banniere-erreur-globale" class="message-erreur masque">
+            Certaines questions requièrent votre attention avant de passer au cours suivant.
+        </div>
+
+        <div class="navigation-assistant">
+            <button type="button" class="btn-secondaire" id="btn-precedent" onclick="naviguer(-1)">← Cours précédent</button>
+            <button type="button" class="btn-primaire btn-nav-suivant" id="btn-suivant" onclick="naviguer(1)">Cours suivant →</button>
+        </div>
+    </div>
+
+    <footer class="pied-page">
+        <p>Idées originales de Hubert Guité (Automne 2026). Système conçu avec l'aide de Gemini.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

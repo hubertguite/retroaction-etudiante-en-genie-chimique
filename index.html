@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sélection des cours - Évaluation CEGCh</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1 class="titre-principal">Rétroaction étudiante en génie chimique (RÉGCh)</h1>
+    </header>
+
+    <h2>1. Identification</h2>
+    <p class="texte-confidentialite">
+        Pour faciliter le traitement des réponses, votre nom doit être spécifié. Cependant, à moins d'une volonté contraire de votre part, vos commentaires ne seront en aucun cas rattachés à votre nom lors d'une quelconque communication, et la confidentialité de vos réponses est en tout temps assurée par le comité des étudiant·e·s si vous désirez conserver l'anonymat.
+    </p>
+    
+    <div class="identification" id="bloc-identification">
+        <div class="grille-id">
+            <div class="champ">
+                <label for="prenom">Prénom</label>
+                <input type="text" id="prenom" placeholder="" autocomplete="given-name" required>
+            </div>
+            <div class="champ">
+                <label for="nom">Nom</label>
+                <input type="text" id="nom" placeholder="" autocomplete="family-name" required>
+            </div>
+            <div class="champ">
+                <label for="courriel">Courriel</label>
+                <input type="email" id="courriel" placeholder="prenom.nom@polymtl.ca" autocomplete="email" required>
+            </div>
+        </div>
+        <div id="erreur-identification" class="message-erreur masque"></div>
+    </div>
+
+    <h2>2. Ajout rapide par session (Cheminement régulier)</h2>
+    <div class="grille-sessions">
+        <button type="button" class="btn-secondaire btn-session" data-session="1">Session 1</button>
+        <button type="button" class="btn-secondaire btn-session" data-session="2">Session 2</button>
+        <button type="button" class="btn-secondaire btn-session" data-session="3">Session 3</button>
+        <button type="button" class="btn-secondaire btn-session" data-session="4">Session 4</button>
+        <button type="button" class="btn-secondaire btn-session" data-session="5">Session 5</button>
+        <button type="button" class="btn-secondaire btn-session" data-session="6">Session 6</button>
+        <button type="button" class="btn-secondaire btn-session" data-session="7">Session 7</button>
+        <button type="button" class="btn-secondaire btn-session" data-session="8">Session 8</button>
+    </div>
+
+    <h2>3. Sélection manuelle des cours</h2>
+    <div class="conteneur-recherche">
+        <input type="text" id="barre-recherche" placeholder="Ex. : GCH1110 ou Thermodynamique..." autocomplete="off">
+        <div id="suggestions"></div>
+        <div class="instruction">Tapez un sigle ou un mot-clé, puis touchez une suggestion ou appuyez sur « Entrée ».</div>
+        
+        <!-- Sous-système de contingence intégré (compatible mobile et ordinateur) -->
+        <div style="text-align: center; margin-top: 15px;">
+            <button type="button" id="btn-ouvrir-manuel" class="btn-secondaire btn-compact">
+                Le cours ne figure pas dans la liste ? Ajouter un sigle manuellement
+            </button>
+        </div>
+
+        <div id="tiroir-ajout-manuel" class="tiroir-manuel masque">
+            <input type="text" id="champ-sigle-manuel" placeholder="Sigle du cours (ex. : GCH8000)" maxlength="15">
+            <button type="button" id="btn-confirmer-manuel" class="btn-primaire btn-inline">Ajouter</button>
+        </div>
+    </div>
+
+    <div class="entete-jetons">
+        <span>Cours sélectionnés pour l'évaluation :</span>
+        <button type="button" id="btn-vider-cours" class="btn-lien masque">Tout retirer</button>
+    </div>
+    <div id="zone-jetons">
+        <!-- Les jetons apparaîtront ici dynamiquement -->
+    </div>
+    
+    <button id="btn-valider-selection" class="btn-primaire masque">Passer à l'évaluation</button>
+
+    <footer class="pied-page">
+        <p>Idées originales de Hubert Guité (Automne 2026). Système conçu avec l'aide de Gemini.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
