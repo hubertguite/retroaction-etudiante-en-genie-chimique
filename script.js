@@ -466,8 +466,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // ========================================================================
     const conteneurPiste = document.getElementById('piste-jetons');
     if (conteneurPiste) {
-        const coursAEvaluerData = localStorage.getItem('coursAEvaluer');
-        const coursAEvaluer = coursAEvaluerData ? JSON.parse(coursAEvaluerData) : [];
+        let coursAEvaluer = [];
+        try {
+            const coursAEvaluerData = localStorage.getItem('coursAEvaluer');
+            coursAEvaluer = coursAEvaluerData ? JSON.parse(coursAEvaluerData) : [];
+        } catch (e) {
+            coursAEvaluer = [];
+        }
 
         if (coursAEvaluer.length === 0) {
             window.location.href = 'index.html';
@@ -482,6 +487,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let indexCourant = 0;
         let baseDeDonneesLocale = {};
+        let sortieAutorisee = false;
 
         const form = document.getElementById('formulaire-cours');
         const checkboxIaAutre = document.getElementById('checkbox-ia-autre');
@@ -522,6 +528,140 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             return false;
         }
+
+        // --- Détection de réponses déjà saisies (sur le cours actif ou un cours précédent) ---
+        function aDesReponsesSaisies() {
+            for (let i = 1; i <= 12; i++) {
+                if (estQuestionRepondue(`bloc-q${i}`)) return true;
+            }
+            return Object.keys(baseDeDonneesLocale).some(sigle => {
+                const d = baseDeDonneesLocale[sigle];
+                if (!d) return false;
+                const radios = [
+                    'motivation', 'charge', 'consolidation', 'clarte_livrables',
+                    'clarte_examens', 'delai_correction', 'plateforme_moodle',
+                    'quantite_exercices', 'frequence_ia'
+                ];
+                if (radios.some(r => d[r] !== null && d[r] !== undefined)) return true;
+                if (d._ui) {
+                    if (Array.isArray(d._ui.q10_coches) && d._ui.q10_coches.length > 0) return true;
+                    if (d._ui.q11_na || d._ui.q11_texte || d._ui.q12_na || d._ui.q12_texte) return true;
+                }
+                return false;
+            });
+        }
+
+        // --- Sous-système de confirmation avant retour à la sélection des cours ---
+        function demanderConfirmationModificationCours(urlDestination = 'index.html') {
+            try {
+                let modale = document.getElementById('modale-confirmation-retour');
+                if (!modale) {
+                    modale = document.createElement('div');
+                    modale.id = 'modale-confirmation-retour';
+                    modale.className = 'modale-superposition masque';
+                    modale.setAttribute('role', 'dialog');
+                    modale.setAttribute('aria-modal', 'true');
+                    modale.setAttribute('aria-labelledby', 'titre-modale-retour');
+                    modale.innerHTML = `
+                        <div class="modale-boite">
+                            <h3 id="titre-modale-retour" class="modale-titre">Modifier votre choix de cours ?</h3>
+                            <p class="modale-texte">
+                                Attention : le retour à la page de sélection réinitialisera toutes les réponses déjà remplies dans ce questionnaire.
+                            </p>
+                            <div class="modale-actions">
+                                <button type="button" id="btn-annuler-retour" class="btn-secondaire">
+                                    Continuer l'évaluation
+                                </button>
+                                <button type="button" id="btn-confirmer-retour" class="btn-danger">
+                                    Oui, modifier et effacer
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(modale);
+
+                    const fermerModale = () => {
+                        modale.classList.add('masque');
+                    };
+
+                    document.getElementById('btn-annuler-retour').addEventListener('click', fermerModale);
+                    modale.addEventListener('click', (e) => {
+                        if (e.target === modale) fermerModale();
+                    });
+                    document.addEventListener('keydown', (e) => {
+                        if (e.key === 'Escape' && !modale.classList.contains('masque')) {
+                            fermerModale();
+                        }
+                    });
+                }
+
+                const btnConfirmer = document.getElementById('btn-confirmer-retour');
+                btnConfirmer.onclick = () => {
+                    sortieAutorisee = true;
+                    window.location.href = urlDestination;
+                };
+
+                modale.classList.remove('masque');
+                const btnAnnuler = document.getElementById('btn-annuler-retour');
+                if (btnAnnuler) setTimeout(() => btnAnnuler.focus(), 40);
+            } catch (err) {
+                // Contingence native si le DOM est restreint
+                const confirmationNative = window.confirm(
+                    "Attention : retourner à la sélection des cours effacera toutes les réponses déjà remplies. Voulez-vous vraiment continuer ?"
+                );
+                if (confirmationNative) {
+                    sortieAutorisee = true;
+                    window.location.href = urlDestination;
+                }
+            }
+        }
+
+        // --- Interception universelle du bouton « Modifier mon choix de cours » ---
+        function initialiserVerrouModificationCours() {
+            const selecteursCibles = [
+                '#btn-modifier-cours',
+                '#btn-retour-accueil',
+                '.bandeau-progression a',
+                '.bandeau-progression button',
+                '.entete-progression a',
+                '.entete-progression button',
+                'a[href*="index.html"]'
+            ];
+            const elementsCibles = new Set(document.querySelectorAll(selecteursCibles.join(', ')));
+
+            document.querySelectorAll('a, button').forEach(el => {
+                const texte = (el.textContent || '').toLowerCase();
+                const onclickAttr = (el.getAttribute('onclick') || '').toLowerCase();
+                if (texte.includes('modifier') || onclickAttr.includes('index.html')) {
+                    elementsCibles.add(el);
+                }
+            });
+
+            elementsCibles.forEach(el => {
+                const urlCible = el.getAttribute('href') || 'index.html';
+                el.setAttribute('data-url-retour', urlCible);
+                // Neutralise tout attribut onclick inline qui contournerait la confirmation
+                el.removeAttribute('onclick');
+                el.onclick = null;
+
+                el.addEventListener('click', (e) => {
+                    if (sortieAutorisee) return;
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    demanderConfirmationModificationCours(el.getAttribute('data-url-retour') || 'index.html');
+                }, true);
+            });
+
+            // Protection complémentaire contre le bouton « Précédent » du navigateur ou l'actualisation accidentelle
+            window.addEventListener('beforeunload', (e) => {
+                if (!sortieAutorisee && aDesReponsesSaisies()) {
+                    e.preventDefault();
+                    e.returnValue = '';
+                }
+            });
+        }
+
+        initialiserVerrouModificationCours();
 
         // --- Rétroaction visuelle sur chaque carte de question + barre de progression temps réel ---
         function actualiserFeedbackBlocsEtProgression() {
@@ -954,6 +1094,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // --- Navigation séquentielle et transmission finale ---
         window.naviguer = function (direction) {
+            if (direction === -1 && indexCourant <= 0) return;
             sauvegarderReponses();
 
             // Bloqueur strict lors de la progression vers l'avant
@@ -992,6 +1133,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify(chargeUtile)
                 })
                 .then(() => {
+                    sortieAutorisee = true;
                     document.getElementById('barre-remplissage').style.width = '100%';
                     document.getElementById('phase-evaluation').innerHTML = `
                         <div class="carte-confirmation">

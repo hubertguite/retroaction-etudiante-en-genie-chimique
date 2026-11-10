@@ -606,6 +606,73 @@ textarea.champ-desactive-visuel {
 }
 
 /* ==========================================
+   MODALE DE CONFIRMATION (VERROU DE SORTIE)
+   ========================================== */
+.modale-superposition {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(22, 51, 33, 0.55);
+    backdrop-filter: blur(3px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 2000;
+    animation: apparitionDouce 0.2s ease-out;
+}
+
+.modale-boite {
+    background: var(--blanc-carte);
+    max-width: 460px;
+    width: 100%;
+    padding: 28px 24px;
+    border-radius: var(--radius-carte);
+    border-top: 6px solid var(--accent-orange);
+    box-shadow: 0 16px 40px rgba(22, 51, 33, 0.28);
+    text-align: center;
+}
+
+.modale-titre {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    color: var(--vert-primaire);
+}
+
+.modale-texte {
+    font-size: 0.96em;
+    color: var(--texte-principal);
+    margin-bottom: 24px;
+    line-height: 1.55;
+}
+
+.modale-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-danger {
+    background-color: var(--erreur-rouge);
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: var(--radius-bouton);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 12px rgba(217, 83, 79, 0.25);
+}
+.btn-danger:hover {
+    background-color: #b93834;
+    transform: translateY(-1px);
+}
+.btn-danger:active {
+    transform: translateY(1px) scale(0.97);
+}
+
+/* ==========================================
    NOTIFICATIONS FURTIVES (TOAST) & ANIMATIONS
    ========================================== */
 #conteneur-toast {
@@ -735,6 +802,13 @@ textarea.champ-desactive-visuel {
         align-items: stretch;
     }
     .navigation-assistant button {
+        width: 100%;
+    }
+
+    .modale-actions {
+        flex-direction: column;
+    }
+    .modale-actions button {
         width: 100%;
     }
 }
